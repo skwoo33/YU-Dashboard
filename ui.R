@@ -1,7 +1,11 @@
 library(shiny)
 library(shinydashboard)
 
+# 주요지표 용 tabItem
+source("tabItem_keyIndicators.R", encoding = "UTF-8")
+
 dashboardPage(
+  title = "Yeungnam University",
   # dashboardHeader(title = "Yeungnam University"),
   # dashboardHeader(title = span("Yeungnam University", style = "background-repeat:no-repeat;background-image:url('http://www.yu.ac.kr/_korean/_image-2017/yu_logo.png')")),
   dashboardHeader(title = tags$a(target = "_blank", href = "http://www.yu.ac.kr", tags$img(src = "img/yu_logo.png"))),
@@ -25,8 +29,8 @@ dashboardPage(
                                  hr(),
                                  br(),
                                  p("조회 조건", style = "font-weight:bold"),
-                                 numericInput("fromYy", "조회시작연도", min = "2010", max = "2020", value = "2013"),
-                                 numericInput("toYy", "조회종료연도", min = "2010", max = "2020", value = "2017"),
+                                 numericInput("fromYy", "조회시작연도", min = "2014", max = "2020", value = "2014"),
+                                 numericInput("toYy", "조회종료연도", min = "2014", max = "2020", value = "2017"),
                                  # selectInput("univCd", "대학", univChoices),
                                  # selectInput("sustCd", "학과", choices = c("국어국문학과","영어영문학과"))
                                  uiOutput("univSelectOut"),
@@ -51,50 +55,7 @@ dashboardPage(
                               "))),
     tabItems(
       # 주요지표
-      tabItem("keyIndicators",
-              fluidRow(
-                column(6,
-                  # valueBox(width = 6, "80%", "장학금수혜율", icon = icon("thumbs-up"))
-                  valueBoxOutput("scalAmtBnftRateAmtValueBoxOut", width = 6),
-                  valueBoxOutput("scalAmtBnftRateRcntValueBoxOut", width = 6)
-                # infoBoxOutput("infoBox")
-                ),
-                column(6,
-                  fluidRow(
-                    uiOutput("now"),
-                    uiOutput("subTitle")
-                  )
-                )
-              ),
-              fluidRow(
-                box(title = "입학생 현황",
-                    solidHeader = TRUE,
-                    status = "success",
-                    collapsible = TRUE,
-                    plotOutput("entrPreconPlotOut")
-                ),
-                box(title = "재학생 현황",
-                    solidHeader = TRUE,
-                    status = "info",
-                    collapsible = TRUE,
-                    plotOutput("hoshPreconPlotOut")
-                )
-              ),
-              fluidRow(
-                box(title = "등록금/장학금 현황",
-                    solidHeader = TRUE,
-                    status = "warning",
-                    collapsible = TRUE,
-                    plotOutput("regAmtScalAmtPreconPlotOut")
-                ),
-                box(title = "장학금 수혜율",
-                    solidHeader = TRUE,
-                    status = "danger",
-                    collapsible = TRUE,
-                    plotOutput("scalAmtBnftRatePlotOut")
-                )
-              )
-      ),
+      tabItem_keyIndicators,
       # 입시
       # 신입생 선발현황(대학)
       tabItem("newStdSltPreconUniv",
